@@ -16,6 +16,7 @@ struct ContentView: View {
     @State private var showStatsSheet: Bool = false
     @State private var showChallengesSheet: Bool = false
     @State private var showSleepSheet: Bool = false
+    @State private var showChatSheet: Bool = false
     @State private var heartBeatAnimation: Bool = false
     
     // Target heart rate zone
@@ -165,7 +166,7 @@ struct ContentView: View {
                         .cornerRadius(10)
                     }
                     .sheet(isPresented: $showChallengesSheet) {
-                        ChallengesPlaceholderView()
+                        ChallengesView()
                     }
                     
                     // Sleep tracking
@@ -188,6 +189,29 @@ struct ContentView: View {
                     .sheet(isPresented: $showSleepSheet) {
                         SleepPlaceholderView()
                     }
+                    
+                    // Chat with other users
+                    Button(action: {
+                        showChatSheet = true
+                    }) {
+                        HStack {
+                            Image(systemName: "message.fill")
+                                .font(.title2)
+                            Text("Chat")
+                                .font(.headline)
+                            Spacer()
+                            Image(systemName: "chevron.right")
+                        }
+                        .padding()
+                        .background(Color.black.opacity(0.1))
+                        .foregroundColor(.primary)
+                        .cornerRadius(10)
+                    }
+                    .sheet(isPresented: $showChatSheet) {
+                        ChatView()
+                    }
+                    
+
                 }
                 .padding(.horizontal)
             }
