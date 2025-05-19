@@ -126,7 +126,7 @@ struct ContentView: View {
                             .cornerRadius(10)
                         }
                         .sheet(isPresented: $showStatsSheet) {
-                            StatsPlaceholderView()
+                            StatsView()
                         }
                     }
                     
