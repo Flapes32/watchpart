@@ -107,7 +107,7 @@ struct ContentView: View {
                             .cornerRadius(10)
                         }
                         .sheet(isPresented: $showTimerSheet) {
-                            TimerPlaceholderView()
+                            TimerView()
                         }
                         
                         Button(action: {
