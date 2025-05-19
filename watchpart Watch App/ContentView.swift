@@ -17,6 +17,7 @@ struct ContentView: View {
     @State private var showChallengesSheet: Bool = false
     @State private var showSleepSheet: Bool = false
     @State private var showChatSheet: Bool = false
+    @State private var showSleepRecoverySheet: Bool = false
     @State private var heartBeatAnimation: Bool = false
     
     // Target heart rate zone
@@ -169,25 +170,25 @@ struct ContentView: View {
                         ChallengesView()
                     }
                     
-                    // Sleep tracking
+                    // Sleep & Recovery tracking
                     Button(action: {
-                        showSleepSheet = true
+                        showSleepRecoverySheet = true
                     }) {
                         HStack {
                             Image(systemName: "bed.double")
                                 .font(.title2)
-                            Text("Sleep")
+                            Text("Sleep & Recovery")
                                 .font(.headline)
                             Spacer()
                             Image(systemName: "chevron.right")
                         }
                         .padding()
-                        .background(Color.black.opacity(0.1))
+                        .background(Color.purple.opacity(0.2))
                         .foregroundColor(.primary)
                         .cornerRadius(10)
                     }
-                    .sheet(isPresented: $showSleepSheet) {
-                        SleepPlaceholderView()
+                    .sheet(isPresented: $showSleepRecoverySheet) {
+                        SleepRecoveryView()
                     }
                     
                     // Chat with other users

@@ -15,11 +15,17 @@ struct BoxingChallenge: Identifiable {
     let timestamp: Date
     var status: ChallengeStatus
     var userReaction: String?
+    var targetValue: Int
+    var currentValue: Int = 0
+    var expiresAt: Date?
     
-    enum ChallengeType: String {
+    enum ChallengeType: String, CaseIterable {
         case rounds = "Rounds Challenge"
         case heartRate = "Heart Rate Challenge"
         case calories = "Calories Challenge"
+        case combo = "Combo Challenge"
+        case speedBag = "Speed Bag Challenge"
+        case endurance = "Endurance Challenge"
     }
     
     enum ChallengeStatus: String {
@@ -35,9 +41,23 @@ struct ChallengesView: View {
     @State private var challenges: [BoxingChallenge] = []
     @State private var showReactionPicker: Bool = false
     @State private var selectedChallengeId: UUID?
+    @State private var selectedTab = 0
     
     // Quick reactions
     let quickReactions = ["👍", "🔥", "💪", "👊", "🥊", "🏆"]
+    
+    // Filtered challenges
+    private var pendingChallenges: [BoxingChallenge] {
+        challenges.filter { $0.status == .pending }
+    }
+    
+    private var activeChallenges: [BoxingChallenge] {
+        challenges.filter { $0.status == .accepted }
+    }
+    
+    private var completedChallenges: [BoxingChallenge] {
+        challenges.filter { $0.status == .completed }
+    }
     
     var body: some View {
         VStack(spacing: 0) {
@@ -68,59 +88,179 @@ struct ChallengesView: View {
             .padding(.vertical, 8)
             .background(Color.black.opacity(0.1))
             
-            // Challenges list
-            if challenges.isEmpty {
-                VStack(spacing: 16) {
-                    Image(systemName: "trophy.fill")
-                        .font(.system(size: 40))
-                        .foregroundColor(.orange)
-                        .padding(.top, 40)
-                    
-                    Text("No challenges yet")
-                        .font(.headline)
-                    
-                    Text("Your boxing challenges will appear here")
-                        .font(.caption)
-                        .multilineTextAlignment(.center)
-                        .padding(.horizontal)
-                    
-                    Button(action: {
-                        // Add sample challenges for demo
-                        loadSampleChallenges()
-                    }) {
-                        Text("Show Demo Challenges")
-                            .font(.system(size: 14, weight: .medium))
-                            .padding(.horizontal, 16)
-                            .padding(.vertical, 8)
-                            .background(Color.blue)
-                            .foregroundColor(.white)
-                            .cornerRadius(8)
+            // Tab View for challenges and reactions
+            TabView(selection: $selectedTab) {
+                // First Tab - Challenges
+                if challenges.isEmpty {
+                    // Empty state
+                    VStack(spacing: 16) {
+                        Image(systemName: "trophy.fill")
+                            .font(.system(size: 40))
+                            .foregroundColor(.orange)
+                            .padding(.top, 40)
+                        
+                        Text("No challenges yet")
+                            .font(.headline)
+                        
+                        Text("Your boxing challenges will appear here")
+                            .font(.caption)
+                            .multilineTextAlignment(.center)
+                            .padding(.horizontal)
+                        
+                        Button(action: {
+                            // Add sample challenges for demo
+                            loadSampleChallenges()
+                        }) {
+                            Text("Show Demo Challenges")
+                                .font(.system(size: 14, weight: .medium))
+                                .padding(.horizontal, 16)
+                                .padding(.vertical, 8)
+                                .background(Color.blue)
+                                .foregroundColor(.white)
+                                .cornerRadius(8)
+                        }
+                        .padding(.top, 20)
                     }
-                    .padding(.top, 20)
-                }
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-            } else {
-                ScrollView {
-                    VStack(spacing: 12) {
-                        ForEach(challenges) { challenge in
-                            ChallengeCard(
-                                challenge: challenge,
-                                onAccept: {
-                                    acceptChallenge(challenge.id)
-                                },
-                                onDecline: {
-                                    declineChallenge(challenge.id)
-                                },
-                                onReact: {
-                                    selectedChallengeId = challenge.id
-                                    showReactionPicker = true
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .tag(0)
+                } else {
+                    // Challenges list
+                    VStack {
+                        // Section title
+                        HStack {
+                            Text("New Challenges")
+                                .font(.system(size: 14, weight: .semibold))
+                            Spacer()
+                            Text("\(pendingChallenges.count)")
+                                .font(.system(size: 12))
+                                .padding(.horizontal, 6)
+                                .padding(.vertical, 2)
+                                .background(Color.yellow.opacity(0.3))
+                                .cornerRadius(10)
+                        }
+                        .padding(.horizontal)
+                        
+                        ScrollView {
+                            VStack(spacing: 10) {
+                                ForEach(pendingChallenges) { challenge in
+                                    ChallengeCard(
+                                        challenge: challenge,
+                                        onAccept: {
+                                            acceptChallenge(challenge.id)
+                                        },
+                                        onDecline: {
+                                            declineChallenge(challenge.id)
+                                        },
+                                        onReact: {
+                                            selectedChallengeId = challenge.id
+                                            showReactionPicker = true
+                                        }
+                                    )
                                 }
-                            )
+                            }
+                            .padding(.horizontal)
+                            
+                            // Active challenges section
+                            if !activeChallenges.isEmpty {
+                                HStack {
+                                    Text("Active Challenges")
+                                        .font(.system(size: 14, weight: .semibold))
+                                    Spacer()
+                                    Text("\(activeChallenges.count)")
+                                        .font(.system(size: 12))
+                                        .padding(.horizontal, 6)
+                                        .padding(.vertical, 2)
+                                        .background(Color.blue.opacity(0.3))
+                                        .cornerRadius(10)
+                                }
+                                .padding(.horizontal)
+                                .padding(.top, 8)
+                                
+                                VStack(spacing: 10) {
+                                    ForEach(activeChallenges) { challenge in
+                                        ChallengeCard(
+                                            challenge: challenge,
+                                            onAccept: {
+                                                acceptChallenge(challenge.id)
+                                            },
+                                            onDecline: {
+                                                declineChallenge(challenge.id)
+                                            },
+                                            onReact: {
+                                                selectedChallengeId = challenge.id
+                                                showReactionPicker = true
+                                            }
+                                        )
+                                    }
+                                }
+                                .padding(.horizontal)
+                            }
                         }
                     }
-                    .padding()
+                    .tag(0)
+                    
+                    // Second Tab - Reactions and History
+                    VStack {
+                        // Section title
+                        HStack {
+                            Text("Completed Challenges")
+                                .font(.system(size: 14, weight: .semibold))
+                            Spacer()
+                            Text("\(completedChallenges.count)")
+                                .font(.system(size: 12))
+                                .padding(.horizontal, 6)
+                                .padding(.vertical, 2)
+                                .background(Color.green.opacity(0.3))
+                                .cornerRadius(10)
+                        }
+                        .padding(.horizontal)
+                        
+                        if completedChallenges.isEmpty {
+                            VStack(spacing: 16) {
+                                Image(systemName: "checkmark.circle")
+                                    .font(.system(size: 40))
+                                    .foregroundColor(.green)
+                                    .padding(.top, 40)
+                                
+                                Text("No completed challenges yet")
+                                    .font(.headline)
+                                
+                                Text("Completed challenges will appear here")
+                                    .font(.caption)
+                                    .multilineTextAlignment(.center)
+                                    .padding(.horizontal)
+                            }
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        } else {
+                            ScrollView {
+                                VStack(spacing: 10) {
+                                    ForEach(completedChallenges) { challenge in
+                                        ChallengeCard(
+                                            challenge: challenge,
+                                            onAccept: {
+                                                acceptChallenge(challenge.id)
+                                            },
+                                            onDecline: {
+                                                declineChallenge(challenge.id)
+                                            },
+                                            onReact: {
+                                                selectedChallengeId = challenge.id
+                                                showReactionPicker = true
+                                            }
+                                        )
+                                    }
+                                }
+                                .padding(.horizontal)
+                            }
+                        }
+                    }
+                    .tag(1)
                 }
             }
+            #if os(watchOS)
+            .tabViewStyle(PageTabViewStyle())
+            .indexViewStyle(PageIndexViewStyle())
+            #endif
             
             // Reaction picker
             if showReactionPicker {
@@ -152,6 +292,12 @@ struct ChallengesView: View {
                 .background(Color.black.opacity(0.1))
             }
         }
+        .onAppear {
+            // Load sample challenges when view appears if list is empty
+            if challenges.isEmpty {
+                loadSampleChallenges()
+            }
+        }
     }
     
     // MARK: - Helper methods
@@ -176,25 +322,120 @@ struct ChallengesView: View {
     
     private func loadSampleChallenges() {
         let sampleChallenges: [BoxingChallenge] = [
+            // Pending challenges
             BoxingChallenge(
                 sender: "Alex",
                 type: .rounds,
                 timestamp: Date().addingTimeInterval(-3600),
-                status: .pending
+                status: .pending,
+                userReaction: nil,
+                targetValue: 5,
+                currentValue: 0,
+                expiresAt: Date().addingTimeInterval(86400)
             ),
             BoxingChallenge(
-                sender: "Maria",
+                sender: "Jamie",
+                type: .combo,
+                timestamp: Date().addingTimeInterval(-2800),
+                status: .pending,
+                userReaction: nil,
+                targetValue: 50,
+                currentValue: 0,
+                expiresAt: Date().addingTimeInterval(72000)
+            ),
+            BoxingChallenge(
+                sender: "Carlos",
+                type: .speedBag,
+                timestamp: Date().addingTimeInterval(-1200),
+                status: .pending,
+                userReaction: nil,
+                targetValue: 120,
+                currentValue: 0,
+                expiresAt: Date().addingTimeInterval(43200)
+            ),
+            
+            // Active challenges
+            BoxingChallenge(
+                sender: "Mike",
                 type: .heartRate,
                 timestamp: Date().addingTimeInterval(-7200),
                 status: .accepted,
-                userReaction: "🔥"
+                userReaction: nil,
+                targetValue: 160,
+                currentValue: 145,
+                expiresAt: Date().addingTimeInterval(43200)
             ),
             BoxingChallenge(
-                sender: "John",
+                sender: "Sophia",
+                type: .endurance,
+                timestamp: Date().addingTimeInterval(-5400),
+                status: .accepted,
+                userReaction: nil,
+                targetValue: 20,
+                currentValue: 8,
+                expiresAt: Date().addingTimeInterval(36000)
+            ),
+            BoxingChallenge(
+                sender: "Coach David",
+                type: .rounds,
+                timestamp: Date().addingTimeInterval(-8600),
+                status: .accepted,
+                userReaction: nil,
+                targetValue: 8,
+                currentValue: 3,
+                expiresAt: Date().addingTimeInterval(28800)
+            ),
+            
+            // Completed challenges
+            BoxingChallenge(
+                sender: "Sarah",
                 type: .calories,
+                timestamp: Date().addingTimeInterval(-10800),
+                status: .completed,
+                userReaction: "🔥",
+                targetValue: 300,
+                currentValue: 320,
+                expiresAt: Date().addingTimeInterval(-3600)
+            ),
+            BoxingChallenge(
+                sender: "Training Group",
+                type: .combo,
                 timestamp: Date().addingTimeInterval(-86400),
                 status: .completed,
-                userReaction: "💪"
+                userReaction: "👊",
+                targetValue: 30,
+                currentValue: 42,
+                expiresAt: Date().addingTimeInterval(-43200)
+            ),
+            BoxingChallenge(
+                sender: "Gym Partner",
+                type: .speedBag,
+                timestamp: Date().addingTimeInterval(-172800),
+                status: .completed,
+                userReaction: "🏆",
+                targetValue: 90,
+                currentValue: 95,
+                expiresAt: Date().addingTimeInterval(-86400)
+            ),
+            BoxingChallenge(
+                sender: "Weekly Challenge",
+                type: .endurance,
+                timestamp: Date().addingTimeInterval(-259200),
+                status: .completed,
+                userReaction: "💪",
+                targetValue: 15,
+                currentValue: 15,
+                expiresAt: Date().addingTimeInterval(-172800)
+            ),
+            BoxingChallenge(
+                sender: "Lisa",
+                type: .endurance,
+                timestamp: Date().addingTimeInterval(-21600),
+                status: .accepted,
+                userReaction: "👊",
+                targetValue: 45,
+                currentValue: 20,
+                expiresAt: Date().addingTimeInterval(43200)
             )
         ]
         
@@ -332,6 +573,12 @@ struct ChallengeCard: View {
             return "heart.fill"
         case .calories:
             return "flame.fill"
+        case .combo:
+            return "figure.boxing"
+        case .speedBag:
+            return "speedometer"
+        case .endurance:
+            return "figure.run"
         }
     }
     
@@ -343,6 +590,12 @@ struct ChallengeCard: View {
             return .red
         case .calories:
             return .orange
+        case .combo:
+            return .purple
+        case .speedBag:
+            return .green
+        case .endurance:
+            return .indigo
         }
     }
     
@@ -362,11 +615,17 @@ struct ChallengeCard: View {
     private var challengeDescription: String {
         switch challenge.type {
         case .rounds:
-            return "Complete 5 rounds of 3 minutes each with 1 minute rest"
+            return "Complete \(challenge.targetValue) rounds of 3 minutes each with 1 minute rest"
         case .heartRate:
-            return "Maintain your heart rate in the target zone (120-160 BPM) for 20 minutes"
+            return "Maintain your heart rate at \(challenge.targetValue) BPM for 20 minutes"
         case .calories:
-            return "Burn 300 calories during your boxing workout"
+            return "Burn \(challenge.targetValue) calories during your boxing workout"
+        case .combo:
+            return "Perform \(challenge.targetValue) jab-cross-hook combinations"
+        case .speedBag:
+            return "Hit the speed bag \(challenge.targetValue) times without stopping"
+        case .endurance:
+            return "Complete \(challenge.targetValue) minutes of non-stop shadow boxing"
         }
     }
     
