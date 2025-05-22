@@ -106,7 +106,7 @@ struct ContentView: View {
                             .foregroundColor(.white)
                             .cornerRadius(10)
                         }
-                        .sheet(isPresented: $showTimerSheet) {
+                        .fullScreenCover(isPresented: $showTimerSheet) {
                             TimerView()
                         }
                         

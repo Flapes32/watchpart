@@ -7,10 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1864DC232DDFAC2100B28779 /* FinalWatch.appex in Embed ExtensionKit Extensions */ = {isa = PBXBuildFile; fileRef = 1864DC1A2DDFAC2100B28779 /* FinalWatch.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		189DE42D2DDA7C1F0020B228 /* watchpart Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 189DE42C2DDA7C1F0020B228 /* watchpart Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		1864DC212DDFAC2100B28779 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 189DE4202DDA7C1F0020B228 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1864DC192DDFAC2100B28779;
+			remoteInfo = FinalWatch;
+		};
 		189DE42E2DDA7C1F0020B228 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 189DE4202DDA7C1F0020B228 /* Project object */;
@@ -35,6 +43,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		1864DC282DDFAC2100B28779 /* Embed ExtensionKit Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(EXTENSIONS_FOLDER_PATH)";
+			dstSubfolderSpec = 16;
+			files = (
+				1864DC232DDFAC2100B28779 /* FinalWatch.appex in Embed ExtensionKit Extensions */,
+			);
+			name = "Embed ExtensionKit Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		189DE4522DDA7C200020B228 /* Embed Watch Content */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -49,13 +68,32 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1864DC1A2DDFAC2100B28779 /* FinalWatch.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.extensionkit-extension"; includeInIndex = 0; path = FinalWatch.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		189DE4262DDA7C1F0020B228 /* watchpart.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = watchpart.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		189DE42C2DDA7C1F0020B228 /* watchpart Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "watchpart Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		189DE43B2DDA7C200020B228 /* watchpart Watch AppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "watchpart Watch AppTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		189DE4452DDA7C200020B228 /* watchpart Watch AppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "watchpart Watch AppUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		1864DC242DDFAC2100B28779 /* Exceptions for "FinalWatch" folder in "FinalWatch" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 1864DC192DDFAC2100B28779 /* FinalWatch */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		1864DC1B2DDFAC2100B28779 /* FinalWatch */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				1864DC242DDFAC2100B28779 /* Exceptions for "FinalWatch" folder in "FinalWatch" target */,
+			);
+			path = FinalWatch;
+			sourceTree = "<group>";
+		};
 		189DE4302DDA7C1F0020B228 /* watchpart Watch App */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = "watchpart Watch App";
@@ -74,6 +112,13 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		1864DC172DDFAC2100B28779 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		189DE4292DDA7C1F0020B228 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -104,6 +149,7 @@
 				189DE4302DDA7C1F0020B228 /* watchpart Watch App */,
 				189DE43E2DDA7C200020B228 /* watchpart Watch AppTests */,
 				189DE4482DDA7C200020B228 /* watchpart Watch AppUITests */,
+				1864DC1B2DDFAC2100B28779 /* FinalWatch */,
 				189DE4272DDA7C1F0020B228 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -115,6 +161,7 @@
 				189DE42C2DDA7C1F0020B228 /* watchpart Watch App.app */,
 				189DE43B2DDA7C200020B228 /* watchpart Watch AppTests.xctest */,
 				189DE4452DDA7C200020B228 /* watchpart Watch AppUITests.xctest */,
+				1864DC1A2DDFAC2100B28779 /* FinalWatch.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -122,6 +169,28 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		1864DC192DDFAC2100B28779 /* FinalWatch */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1864DC252DDFAC2100B28779 /* Build configuration list for PBXNativeTarget "FinalWatch" */;
+			buildPhases = (
+				1864DC162DDFAC2100B28779 /* Sources */,
+				1864DC172DDFAC2100B28779 /* Frameworks */,
+				1864DC182DDFAC2100B28779 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				1864DC1B2DDFAC2100B28779 /* FinalWatch */,
+			);
+			name = FinalWatch;
+			packageProductDependencies = (
+			);
+			productName = FinalWatch;
+			productReference = 1864DC1A2DDFAC2100B28779 /* FinalWatch.appex */;
+			productType = "com.apple.product-type.extensionkit-extension";
+		};
 		189DE4252DDA7C1F0020B228 /* watchpart */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 189DE4532DDA7C200020B228 /* Build configuration list for PBXNativeTarget "watchpart" */;
@@ -148,10 +217,12 @@
 				189DE4282DDA7C1F0020B228 /* Sources */,
 				189DE4292DDA7C1F0020B228 /* Frameworks */,
 				189DE42A2DDA7C1F0020B228 /* Resources */,
+				1864DC282DDFAC2100B28779 /* Embed ExtensionKit Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				1864DC222DDFAC2100B28779 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				189DE4302DDA7C1F0020B228 /* watchpart Watch App */,
@@ -219,6 +290,9 @@
 				LastSwiftUpdateCheck = 1630;
 				LastUpgradeCheck = 1630;
 				TargetAttributes = {
+					1864DC192DDFAC2100B28779 = {
+						CreatedOnToolsVersion = 16.3;
+					};
 					189DE4252DDA7C1F0020B228 = {
 						CreatedOnToolsVersion = 16.3;
 					};
@@ -253,11 +327,19 @@
 				189DE42B2DDA7C1F0020B228 /* watchpart Watch App */,
 				189DE43A2DDA7C200020B228 /* watchpart Watch AppTests */,
 				189DE4442DDA7C200020B228 /* watchpart Watch AppUITests */,
+				1864DC192DDFAC2100B28779 /* FinalWatch */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		1864DC182DDFAC2100B28779 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		189DE4242DDA7C1F0020B228 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -289,6 +371,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		1864DC162DDFAC2100B28779 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		189DE4282DDA7C1F0020B228 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -313,6 +402,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		1864DC222DDFAC2100B28779 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1864DC192DDFAC2100B28779 /* FinalWatch */;
+			targetProxy = 1864DC212DDFAC2100B28779 /* PBXContainerItemProxy */;
+		};
 		189DE42F2DDA7C1F0020B228 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 189DE42B2DDA7C1F0020B228 /* watchpart Watch App */;
@@ -331,6 +425,61 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		1864DC262DDFAC2100B28779 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = FinalWatch/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = FinalWatch;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = flapes32.watchpart.watchkitapp.FinalWatch;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 11.4;
+			};
+			name = Debug;
+		};
+		1864DC272DDFAC2100B28779 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = FinalWatch/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = FinalWatch;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = flapes32.watchpart.watchkitapp.FinalWatch;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				VALIDATE_PRODUCT = YES;
+				WATCHOS_DEPLOYMENT_TARGET = 11.4;
+			};
+			name = Release;
+		};
 		189DE44D2DDA7C200020B228 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -509,7 +658,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				INFOPLIST_KEY_CFBundleDisplayName = watchpart;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = flapes32.watchpart;
+				PRODUCT_BUNDLE_IDENTIFIER = flapes32.final;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SWIFT_VERSION = 5.0;
@@ -523,7 +672,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				INFOPLIST_KEY_CFBundleDisplayName = watchpart;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = flapes32.watchpart;
+				PRODUCT_BUNDLE_IDENTIFIER = flapes32.final;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SWIFT_VERSION = 5.0;
@@ -610,6 +759,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		1864DC252DDFAC2100B28779 /* Build configuration list for PBXNativeTarget "FinalWatch" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1864DC262DDFAC2100B28779 /* Debug */,
+				1864DC272DDFAC2100B28779 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		189DE4232DDA7C1F0020B228 /* Build configuration list for PBXProject "watchpart" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
